@@ -179,9 +179,20 @@ def get_secrets_file(owner):
     return CLIENT_SECRETS_FILE if owner == 'ralph' else JESSICA_CLIENT_SECRETS_FILE
 
 def store_credentials(owner, creds):
-    required_fields = [creds.refresh_token, creds.token_uri, creds.client_id, creds.client_secret]
-    if not all(required_fields):
-        raise ValueError("OAuth credentials incomplete. Please reauthorize with full consent.")
+    # DEBUG MODE: Print out exactly what was received
+    missing = []
+    if not creds.refresh_token:
+        missing.append("refresh_token")
+    if not creds.token_uri:
+        missing.append("token_uri")
+    if not creds.client_id:
+        missing.append("client_id")
+    if not creds.client_secret:
+        missing.append("client_secret")
+
+    if missing:
+        print(f"[OAuth Debug] Incomplete credentials received for {owner}: missing {', '.join(missing)}")
+        return f"OAuth authorization failed: missing fields: {', '.join(missing)}", 500
 
     existing = CalendarCredential.query.filter_by(owner=owner).first()
     if not existing:
@@ -194,6 +205,9 @@ def store_credentials(owner, creds):
     existing.scopes = ",".join(creds.scopes)
     db.session.add(existing)
     db.session.commit()
+
+    return f"{owner.title()}'s calendar successfully authorized!"
+
 
 def load_credentials(owner):
     record = CalendarCredential.query.filter_by(owner=owner).first()
