@@ -1,5 +1,4 @@
 import os
-import datetime
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
@@ -7,6 +6,8 @@ from googleapiclient.discovery import build
 from .models import db, CalendarCredential, Booking
 import stripe
 from .services import SERVICE_CATALOG
+from datetime import datetime, timedelta, timezone, time as dt_time
+from dateutil import parser
 
 calendar_routes = Blueprint('calendar_routes', __name__)
 
@@ -117,14 +118,14 @@ def booking_success():
     creds = load_credentials(config['owner'])
     service = build('calendar', 'v3', credentials=creds)
 
-    start_dt = datetime.datetime.fromisoformat(data['slot'])
-    end_dt = start_dt + datetime.timedelta(minutes=config['duration'])
+    start_dt = datetime.fromisoformat(data['slot']).astimezone(timezone.utc)
+    end_dt = start_dt + timedelta(minutes=config['duration'])
 
     event = {
         'summary': config['name'],
         'description': f"Client: {data['name']}, Email: {data['email']}, Phone: {data['phone']}",
-        'start': {'dateTime': start_dt.isoformat(), 'timeZone': 'America/Chicago'},
-        'end': {'dateTime': end_dt.isoformat(), 'timeZone': 'America/Chicago'},
+        'start': {'dateTime': start_dt.isoformat(), 'timeZone': 'UTC'},
+        'end': {'dateTime': end_dt.isoformat(), 'timeZone': 'UTC'},
     }
 
     created_event = service.events().insert(calendarId='primary', body=event).execute()
@@ -143,7 +144,7 @@ def booking_success():
 
     return "Booking complete!"
 
-# === Availability Logic ===
+# === Availability Logic with timezone patch ===
 
 def get_available_slots(service_type):
     config = SERVICE_CATALOG[service_type]
@@ -155,13 +156,13 @@ def get_available_slots(service_type):
     creds = load_credentials(owner)
     service = build('calendar', 'v3', credentials=creds)
 
-    now = datetime.datetime.utcnow()
-    end_date = now + datetime.timedelta(days=days_ahead)
+    now = datetime.now(timezone.utc)
+    end_date = now + timedelta(days=days_ahead)
 
     events_result = service.events().list(
         calendarId='primary',
-        timeMin=now.isoformat() + 'Z',
-        timeMax=end_date.isoformat() + 'Z',
+        timeMin=now.isoformat(),
+        timeMax=end_date.isoformat(),
         singleEvents=True,
         orderBy='startTime'
     ).execute()
@@ -169,9 +170,9 @@ def get_available_slots(service_type):
 
     slots = []
     for day_offset in range(days_ahead):
-        date = now.date() + datetime.timedelta(days=day_offset)
+        date = now.date() + timedelta(days=day_offset)
         for hour in hours:
-            slot_time = datetime.datetime.combine(date, datetime.time(hour, 0))
+            slot_time = datetime.combine(date, dt_time(hour, 0, tzinfo=timezone.utc))
             conflict = any(
                 (slot_time >= parse_event(e['start']) and slot_time < parse_event(e['end']))
                 for e in events
@@ -182,9 +183,10 @@ def get_available_slots(service_type):
 
 def parse_event(event_time):
     if 'dateTime' in event_time:
-        return datetime.datetime.fromisoformat(event_time['dateTime'].replace('Z', '+00:00'))
+        dt = parser.isoparse(event_time['dateTime'])
     else:
-        return datetime.datetime.fromisoformat(event_time['date'])
+        dt = parser.isoparse(event_time['date'])
+    return dt.astimezone(timezone.utc)
 
 # === Credentials Storage ===
 
@@ -192,7 +194,6 @@ def get_secrets_file(owner):
     return CLIENT_SECRETS_FILE if owner == 'ralph' else JESSICA_CLIENT_SECRETS_FILE
 
 def store_credentials(owner, creds):
-    # DEBUG MODE: Print out exactly what was received
     missing = []
     if not creds.refresh_token:
         missing.append("refresh_token")
@@ -220,7 +221,6 @@ def store_credentials(owner, creds):
     db.session.commit()
 
     return f"{owner.title()}'s calendar successfully authorized!"
-
 
 def load_credentials(owner):
     record = CalendarCredential.query.filter_by(owner=owner).first()
