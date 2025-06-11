@@ -1,128 +1,54 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
+*.pyo
+*.pyd
+*.pyc
 *.so
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-
-# Environments
+# Virtual Environments
 venv/
 env/
-ENV/
-env.bak/
-venv.bak/
+etc/
+# Flask-specific
+instance/
+migrations/versions/
+*.db
+*.sqlite3
 
-# IDEs and editors
+# Environment files & secrets
+.env
+*.env
+*credentials.json
+
+# IDEs
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
 
-# OS files
+# Logs
+*.log
+
+# Testing & Coverage
+htmlcov/
+.coverage
+.cache
+nosetests.xml
+pytest_cache/
+
+# Distribution files
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Node.js
+node_modules/
+
+# OS
 .DS_Store
 Thumbs.db
 
-# dotenv
-.env
-*.env
-
-# Logs and databases
-*.log
-*.sqlite3
-*.db
-
-# Flask migrations
-migrations/versions/
-
-# Node modules
-node_modules/
-
-# Flask-related secrets (make sure credentials.json is not tracked)
-*credentials.json
-
-# Compiled templates
-*.mo
-*.pot
-
-# Backup files
-*.bak
-
-# Static build folders
-build/
-dist/
-
-# Other personal project-specific files
-__pypackages__/
-*.pyc
-*.pyo
-instance/
-
-# Ignore Python cache and logs
-__pycache__/
-*.log
-
-# Ignore virtual environments
-venv/
-env/
-
-# Ignore OS files
-.DS_Store
-
-# Ignore environment variables
-.env
-*.env
-
-*.sqlite3
-*.log
-*.db
-migrations/versions/
-
-.vscode/
-# Ignore IDE specific files
-.idea/
+# Backup & Swap files
 *.swp
 *.swo
-
-node_modules/
-dist/
-build/
-.cache/
-.coverage
-htmlcov/
-*.cover
 *.bak
