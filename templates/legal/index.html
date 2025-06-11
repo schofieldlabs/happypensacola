@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Mediation & Dispute Resolution - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Amicable Resolution: Your Path to Peace</h1>
+            <p class="lead mt-3">At Schofield Collaborative, we believe that amicable resolution always beats litigation, animosity, stress, and burned bridges. We offer professional mediation and arbitration services designed to help you find common ground and lasting solutions.</p>
+            <a href="#about-us" class="btn btn-primary btn-lg mt-4 shadow-sm">Learn About Our Services</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/mediation_hero.jpg') }}" alt="Two people shaking hands over a table" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Facilitating understanding, achieving resolution.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="about-us" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Expert Guidance in Dispute Resolution</h2>
+        <div class="row g-4 align-items-stretch">
+            <div class="col-md-7">
+                <div class="card h-100 shadow-sm border-0 p-4">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-primary mb-3">Meet Your Mediator & Arbitrator</h5>
+                        <p class="card-text">Our principal, **Ralph H. Schofield, Jr.**, brings a wealth of experience and a calm, objective approach to every dispute. He is highly qualified and dedicated to helping parties navigate complex issues toward a fair and sustainable resolution.</p>
+                        <ul class="list-unstyled fw-bold mt-3">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Florida Supreme Court Certified Circuit-Civil Mediator</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Florida Supreme Court Certified Family Mediator</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> FINRA Approved Arbitrator</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Florida Supreme Court Qualified Arbitrator</li>
+                        </ul>
+                        <p class="card-text small text-muted">
+                            Ralph's training and experience spans negotiation, leadership, business, family dynamics, real estate, and law, enabling him to understand and facilitate improvement and settlement across diverse relationship types.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card h-100 shadow-sm border-0 bg-info-subtle p-4">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-info mb-3">Service Operated Through</h5>
+                        <h4 class="text-info">Schofield Collaborative, LLC</h4>
+                        <p class="card-text">Schofield Collaborative, LLC proudly contracts with:</p>
+                        <ul class="list-unstyled fw-bold mt-3">
+                            <li><i class="fas fa-gavel text-info me-2"></i> Florida First Judicial Circuit Court for Family Mediations</li>
+                            <li><i class="fas fa-home text-info me-2"></i> Florida Department of Financial Services for Homeowner's Insurance Mediations</li>
+                            <li><i class="fas fa-chart-line text-info me-2"></i> FINRA for Securities Arbitration</li>
+                        </ul>
+                        <p class="card-text small text-muted mb-0">
+                            License #: 33728 FR (Ralph H. Schofield, Jr., Florida Supreme Court Certified Circuit-Civil and Family Mediator)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="services-offered" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Our Dispute Resolution Services</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-balance-scale fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Mediation</h5>
+                        <p class="card-text">Facilitated discussions to help parties reach mutually agreeable settlements in various types of disputes, including family, civil, and homeowner's insurance matters.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-landmark fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Arbitration</h5>
+                        <p class="card-text">A more formal process where an impartial arbitrator hears arguments and evidence from all parties and renders a decision.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-lightbulb fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Facilitated Decision-Making & Negotiation</h5>
+                        <p class="card-text">Support for partnership agreements, contract negotiations, and other scenarios requiring collaborative and informed decision-making.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <p class="lead">Our services can be utilized before or after a lawsuit is filed, with or without attorney involvement, to both settle existing disputes and support the development of stronger business relationships.</p>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="fees-availability" class="mb-5 bg-light p-5 rounded shadow-sm">
+        <h2 class="text-center mb-4 text-secondary">Fees & Availability</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-start">
+                        <thead class="table-primary">
+                            <tr>
+                                <th colspan="2" class="text-center">Standard Private Mediation & Arbitration Fees</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>**Hourly Rate**</td>
+                                <td>$250 per hour</td>
+                            </tr>
+                            <tr>
+                                <td>**Minimum Session**</td>
+                                <td>2 hours</td>
+                            </tr>
+                            <tr>
+                                <td>**Parties Included**</td>
+                                <td>Up to 2 parties</td>
+                            </tr>
+                            <tr>
+                                <td>**Additional Parties**</td>
+                                <td>+$50 per hour per additional party</td>
+                            </tr>
+                            <tr>
+                                <td>**Location**</td>
+                                <td>Escambia County, Florida (Additional fees may apply for outside Escambia County)</td>
+                            </tr>
+                            <tr>
+                                <td>**Videoconferencing Discount**</td>
+                                <td>15% discount for videoconferenced mediation</td>
+                            </tr>
+                            <tr>
+                                <td>**Arbitration Filings Review**</td>
+                                <td>Additional arbitration fees may apply at hourly rate for review of filings outside hearing, if applicable.</td>
+                            </tr>
+                            <tr>
+                                <td>**Other Rates**</td>
+                                <td>Daily and retainer rates available upon request.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-center fw-bold">Primarily available evenings and weekends for your convenience.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="contact-us" class="text-center">
+        <h2 class="mb-4 text-secondary">Ready for Resolution?</h2>
+        <p class="lead">Reach out today to discuss your dispute resolution needs and schedule a convenient session.</p>
+        <a href="tel:+18507392742" class="btn btn-success btn-lg shadow-sm me-3"><i class="fas fa-phone-alt me-2"></i> (850) 739-2742</a>
+        <a href="mailto:ralph@schofieldcollaborative.com" class="btn btn-info btn-lg shadow-sm"><i class="fas fa-envelope me-2"></i> Email Us</a>
+        <p class="mt-4 text-muted small">Schofield Collaborative - Pensacola, Florida</p>
+    </section>
+
+</div>
+{% endblock %}

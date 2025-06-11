@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .flash.success {
+            color: green;
+            background-color: #e6ffe6;
+            padding: 8px;
+            border: 1px solid green;
+            margin-bottom: 10px;
+        }
+        .flash.error {
+            color: red;
+            background-color: #ffe6e6;
+            padding: 8px;
+            border: 1px solid red;
+            margin-bottom: 10px;
+        }
+        .flash.info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            padding: 8px;
+            border: 1px solid #bee5eb;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="flash {{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+<form method="POST">
+  Email: <input type="email" name="email"><br>
+  Password: <input type="password" name="password"><br>
+  <button type="submit">Login</button>
+</form>
+
+
+{% if current_user.is_authenticated %}
+  <h2>Welcome, {{ current_user.email }}!</h2>
+  <a href="{{ url_for('.logout') }}">Logout</a>
+{% else %}
+  <h2>Welcome to the LMS</h2>
+  <a href="{{ url_for('.register') }}"">Register</a>
+{% endif %}
+
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Fitness & Wellness - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Achieve Your Wellness Goals</h1>
+            <p class="lead mt-3">Discover a personalized approach to fitness and holistic well-being with Jessica Wade. Specializing in Gyrotonic, Pilates, and Yoga, we offer tailored sessions designed to enhance your strength, flexibility, and mind-body connection.</p>
+            <a href="#about-jessica" class="btn btn-primary btn-lg mt-4 shadow-sm">Meet Jessica</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/wellness_hero.jpg') }}" alt="Person performing a graceful exercise" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Personalized movement for a healthier you.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="about-jessica" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Your Dedicated Wellness Guide</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-circle fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold text-primary">Jessica Wade</h5>
+                        <p class="card-text lead">
+                            With over a decade of experience as a **studio owner**, Jessica Wade brings a wealth of knowledge and a passion for holistic movement to her clients.
+                        </p>
+                        <p class="card-text">
+                            She holds extensive certifications in **Pilates, Yoga, and Gyrotonic**, allowing her to craft truly unique and effective programs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="our-concept" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Our Gyrotonic-Forward Approach</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0 bg-light p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-bezier-curve fa-3x text-secondary mb-3"></i>
+                        <h5 class="card-title fw-bold">Dynamic Movement, Personalized Attention</h5>
+                        <p class="card-text lead">
+                            Our studio operates on a **Gyrotonic-forward concept**, emphasizing fluid, circular, and spiraling movements that gently strengthen and mobilize the entire body. This unique method improves flexibility, coordination, and strength while rehabilitating and enhancing performance.
+                        </p>
+                        <p class="card-text">
+                            We are primarily geared towards **individuals, duets, and trios**, ensuring highly personalized attention and instruction tailored to your specific needs and goals. Experience the benefits of focused, guided movement in a supportive environment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="pricing-enrollment" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Pricing & Enrollment</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h4 class="text-center mb-3 fw-bold">Standard Rates:</h4>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Session Type</th>
+                                <th>Hourly Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>**Individuals**</td>
+                                <td>$90 / hour</td>
+                            </tr>
+                            <tr>
+                                <td>**Duets**</td>
+                                <td>$120 / hour</td>
+                            </tr>
+                            <tr>
+                                <td>**Trios**</td>
+                                <td>$150 / hour</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 class="text-center mb-3 fw-bold">Enrollment Process:</h4>
+                <div class="card shadow-sm border-0 bg-warning-subtle p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-info-circle fa-2x text-warning mb-3"></i>
+                        <p class="card-text lead fw-bold">
+                            All potential clients must **register in advance** and go through an **initial consultation** to be enrolled in sessions.
+                        </p>
+                        <p class="card-text">
+                            This consultation ensures we understand your unique needs, goals, and any physical considerations, allowing us to create the most effective and safe program for you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="contact-us" class="text-center">
+        <h2 class="mb-4 text-secondary">Ready to Begin Your Journey?</h2>
+        <p class="lead">Schedule your initial consultation today and take the first step towards a healthier, more balanced you.</p>
+        <a href="#" class="btn btn-success btn-lg shadow-sm"><i class="fas fa-calendar-alt me-2"></i> Schedule Consultation</a>
+        <small class="d-block text-muted mt-2">We look forward to guiding you.</small>
+    </section>
+
+</div>
+{% endblock %}

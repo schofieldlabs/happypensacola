@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Real Estate - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Your Real Estate Journey Starts Here</h1>
+            <p class="lead mt-3">Whether you're looking to buy your dream home, sell your property, or find the perfect investment, we connect you with trusted experts who can help you achieve your real estate goals in Pensacola and beyond.</p>
+            <a href="#our-services" class="btn btn-primary btn-lg mt-4 shadow-sm">Explore Our Services</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/realestate_hero.jpg') }}" alt="Modern house with a 'for sale' sign" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Connecting you to the right real estate professionals.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="our-services" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">How We Can Help You</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-home fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Buying a Home</h5>
+                        <p class="card-text">Connect with top local agents who understand the Pensacola market to find your ideal property. Get expert guidance from search to closing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Selling Your Property</h5>
+                        <p class="card-text">Access experienced agents who can market your home effectively, negotiate for the best price, and ensure a smooth selling process.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-handshake fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Referral Services</h5>
+                        <p class="card-text">Leverage our network to find qualified real estate professionals for specialized needs, investment opportunities, or out-of-area moves.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="our-commitment" class="text-center mb-5 bg-light p-5 rounded shadow-sm">
+        <h2 class="mb-4 text-secondary">Our Commitment to You</h2>
+        <p class="lead">At Happy Pensacola, we are dedicated to providing clear, reliable, and compliant real estate referral services. We prioritize connecting you with the right professionals to meet your specific needs.</p>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="disclosure" class="mb-5 p-4 border border-info rounded bg-info-subtle">
+        <h3 class="text-info mb-3">Important Real Estate Disclosure</h3>
+        <p class="text-dark">
+            **Ralph Hamilton Schofield, Jr.** is a licensed Florida Real Estate Broker (License # BK3488650) and practices as a Broker Associate in a referral agent capacity for **License Park Realty, LLC DBA: RealtyConnect.com** (Real Estate Corporation, License # CQ1057778).
+        </p>
+        <p class="text-dark mb-0">
+            This website provides information and connections to licensed real estate professionals for your convenience. All real estate transactions are handled by independent, licensed brokers/agents. This disclosure is provided in compliance with Florida real estate licensing laws and regulations.
+        </p>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="contact-us" class="text-center">
+        <h2 class="mb-4 text-secondary">Ready to Start?</h2>
+        <p class="lead">Contact us today to learn more about how we can help you with your real estate needs.</p>
+        <a href="#" class="btn btn-success btn-lg shadow-sm"><i class="fas fa-phone-alt me-2"></i> Contact Us Now</a>
+        <small class="d-block text-muted mt-2">We look forward to assisting you.</small>
+    </section>
+
+</div>
+{% endblock %}

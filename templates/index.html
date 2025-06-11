@@ -1,0 +1,9 @@
+{% if current_user.is_authenticated %}
+  <h2>Welcome, {{ current_user.email }}!</h2>
+  <a href="{{ url_for('.logout') }}">Logout</a>
+{% else %}
+  <h2>Welcome to the LMS</h2>
+  <a href="{{ url_for('.login') }}">Login</a> or 
+  <a href="{{ url_for('.register') }}">Register</a>
+{% endif %}
+

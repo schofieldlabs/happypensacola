@@ -1,0 +1,5 @@
+<!-- book_mediation.html -->
+<h1>Wellness Booking</h1>
+{% for event in events %}
+    <p>{{ event.start.dateTime or event.start.date }} - {{ event.summary }}</p>
+{% endfor %}

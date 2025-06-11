@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Our Journey to Happy Pensacola</h1>
+            <p class="lead mt-3">Happy Pensacola is born from a shared vision of community well-being, blending decades of experience in specialized services to foster a more vibrant and supportive Pensacola.</p>
+            <a href="#our-story" class="btn btn-primary btn-lg mt-4 shadow-sm">Discover Our Story</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/about_hero.jpg') }}" alt="Symbolic image of community and collaboration" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Dedicated to enriching our community, together.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="our-story" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">A Foundation Built on Expertise & Passion</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0 p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-female fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold text-primary">Jessica Wade: A Decade of Wellness</h5>
+                        <p class="card-text lead">
+                            For over a decade, **Jessica Wade** has been a cornerstone of personalized wellness in Pensacola. As the longtime owner of **Happy Pilates, LLC**, she has dedicated her career to guiding individuals toward enhanced physical and mental well-being.
+                        </p>
+                        <p class="card-text">
+                            Her extensive certifications in Pilates, Yoga, and Gyrotonic reflect a deep commitment to diverse movement modalities, offering tailored programs that empower clients to achieve their unique health goals. Jessica's studio has been a sanctuary for mindful movement, building a legacy of healthier, happier lives.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0 p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-male fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold text-primary">Ralph H. Schofield, Jr.: Diverse Expertise & Service</h5>
+                        <p class="card-text lead">
+                            **Ralph H. Schofield, Jr.** brings a multifaceted background rooted in his existing business, **Schofield Collaborative, LLC**. His professional journey encompasses law, dispute resolution, and spiritual guidance.
+                        </p>
+                        <p class="card-text">
+                            As a Florida Supreme Court Certified Mediator and Qualified Arbitrator, along with being a FINRA Approved Arbitrator, Ralph has committed to fostering amicable resolutions. His role as an ordained minister and Florida Notary Public further expands his capacity to serve the community, whether through ceremonial services, public speaking, or official document notarization. Ralph's diverse expertise is united by a passion for facilitating positive outcomes and offering comprehensive support.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0 bg-light p-4 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-hands-holding fa-3x text-secondary mb-3"></i>
+                        <h5 class="card-title fw-bold">The Birth of Happy Pensacola (Est. 2025)</h5>
+                        <p class="card-text lead">
+                            Born from a shared vision for community betterment, **Happy Pensacola was established in 2025** to bring together Jessica and Ralph's individual strengths under one unified, community-oriented umbrella.
+                        </p>
+                        <p class="card-text">
+                            Our goal is to provide a comprehensive range of services—from holistic wellness and professional development to dispute resolution and essential legal and spiritual support—all designed to enrich the lives of individuals and families in the Pensacola area. Happy Pensacola is more than just a business; it's a commitment to fostering a stronger, happier, and more harmonious community. We believe in empowering our neighbors through accessible, high-quality resources and compassionate guidance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="our-mission" class="text-center mb-5 bg-info-subtle p-5 rounded shadow-sm">
+        <h2 class="mb-4 text-info">Our Mission</h2>
+        <p class="lead">To enhance the well-being and prosperity of the Pensacola community by offering expert, diverse, and accessible services rooted in professionalism, integrity, and a genuine commitment to positive outcomes.</p>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="explore-services" class="text-center">
+        <h2 class="mb-4 text-secondary">Explore What We Offer</h2>
+        <p class="lead">Learn more about how Happy Pensacola can serve your needs across wellness, education, resolution, and ministry.</p>
+        <a href="{{ url_for('index') }}" class="btn btn-success btn-lg shadow-sm"><i class="fas fa-arrow-right me-2"></i> View All Services</a>
+        <small class="d-block text-muted mt-2">Your journey to a happier Pensacola begins here.</small>
+    </section>
+
+</div>
+{% endblock %}

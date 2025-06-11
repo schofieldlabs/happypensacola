@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Courses & Continuing Education - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Elevate Your Expertise</h1>
+            <p class="lead mt-3">Discover a wide range of courses and continuing education opportunities designed to enhance your professional skills, maintain your licenses, and expand your knowledge in various fields.</p>
+            <a href="#our-offerings" class="btn btn-primary btn-lg mt-4 shadow-sm">Explore Course Areas</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/courses_hero.jpg') }}" alt="People learning and collaborating around a table" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Continuous learning for continuous growth.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="our-offerings" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Our Key Course & CE Areas</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-gavel fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Legal Continuing Education</h5>
+                        <p class="card-text">Stay updated with the latest legal trends, regulations, and best practices. Essential for legal professionals and those navigating complex legal landscapes.</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm mt-3 disabled">Content Coming Soon!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Mediation Continuing Education</h5>
+                        <p class="card-text">Develop advanced mediation techniques and dispute resolution skills. Crucial for mediators and anyone involved in conflict resolution.</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm mt-3 disabled">Content Coming Soon!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Real Estate Licensing & CE</h5>
+                        <p class="card-text">From initial licensing to ongoing continuing education, we aim to provide comprehensive resources for Florida real estate professionals. See disclosure below.</p>
+                        <a href="#real-estate-disclosure" class="btn btn-outline-primary btn-sm mt-3">Learn More (Disclosure)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="card shadow-sm border-0 bg-light">
+                    <div class="card-body text-center">
+                        <i class="fas fa-lightbulb fa-3x text-secondary mb-3"></i>
+                        <h5 class="card-title fw-bold">Other Sources of Learning</h5>
+                        <p class="card-text">Beyond specific certifications, explore workshops, seminars, and resources for general professional development, personal growth, and new skill acquisition.</p>
+                        <a href="#" class="btn btn-outline-secondary btn-sm mt-3 disabled">Details Coming Soon!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="real-estate-disclosure" class="mb-5 p-4 border border-warning rounded bg-warning-subtle">
+        <h3 class="text-warning mb-3">Important Real Estate Education Disclosure</h3>
+        <p class="text-dark">
+            Please be advised that all **Florida real estate licensing and continuing education** must be conducted under a **Florida registered real estate school**.
+        </p>
+        <p class="text-dark">
+            At this time, such a school has **not yet been created or registered**. We are in the process of establishing this entity.
+        </p>
+        <p class="text-dark mb-0">
+            Once the school is officially registered and operational, the instructor for these courses will be **Ralph Hamilton Schofield, Jr.**, a licensed Florida Real Estate Instructor (License # ZH1004427).
+        </p>
+        <p class="text-muted small mt-2">
+            This disclosure is provided in compliance with Florida real estate education regulations. Check back for updates on our school registration status.
+        </p>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="stay-informed" class="text-center">
+        <h2 class="mb-4 text-secondary">Stay Informed</h2>
+        <p class="lead">Interested in our upcoming courses and continuing education opportunities? Sign up for our newsletter to receive updates!</p>
+        <a href="#" class="btn btn-success btn-lg shadow-sm"><i class="fas fa-envelope me-2"></i> Join Our Mailing List</a>
+        <small class="d-block text-muted mt-2">Don't miss out on new learning resources.</small>
+    </section>
+
+</div>
+{% endblock %}

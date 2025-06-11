@@ -1,0 +1,16 @@
+/* In static/css/custom.css */
+img.full-banner {
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
+
+.nav-link.hovered {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}

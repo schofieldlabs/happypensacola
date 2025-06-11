@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Ministry & Notary Services - Happy Pensacola{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold text-primary">Guidance, Celebration & Official Services</h1>
+            <p class="lead mt-3">Offering spiritual support, ceremonial services, and professional notary assistance, we are here to serve your community and personal needs with integrity and understanding.</p>
+            <a href="#our-services" class="btn btn-primary btn-lg mt-4 shadow-sm">Explore Our Offerings</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='images/ministry_hero.jpg') }}" alt="Hands clasped, symbolizing support and connection" class="img-fluid rounded shadow-lg">
+            <small class="text-muted d-block mt-2">Dedicated to serving you and your community.</small>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <section id="our-qualifications" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Meet Your Minister & Notary</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="card-body text-center">
+                        <i class="fas fa-cross fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold text-primary">Ralph H. Schofield, Jr.</h5>
+                        <p class="card-text lead">An ordained minister of the **Universal Life Church**, Ralph brings a unique and comprehensive perspective, grounded in a diverse educational background.</p>
+                        <p class="card-text">His extensive education in **philosophy, theology, law, and science** allows for a nuanced and thoughtful approach to spiritual guidance, public discourse, and official services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="our-services" class="mb-5">
+        <h2 class="text-center mb-4 text-secondary">Our Services</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-church fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Wedding Officiant</h5>
+                        <p class="card-text">Craft and lead meaningful and personalized wedding ceremonies that celebrate your unique union.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-microphone-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Public Speaking & Sermons</h5>
+                        <p class="card-text">Engaging and insightful addresses for religious services, community events, conferences, and special occasions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-scroll fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Invocations & Written Word</h5>
+                        <p class="card-text">Thoughtfully crafted invocations, blessings, written articles, and spiritual reflections tailored to your needs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-stamp fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Notary Services</h5>
+                        <p class="card-text">Professional and reliable notarization of documents. See important disclosure below regarding this service.</p>
+                        <a href="#notary-disclosure" class="btn btn-outline-primary btn-sm mt-3">View Notary Disclosure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="notary-disclosure" class="mb-5 p-4 border border-info rounded bg-info-subtle">
+        <h3 class="text-info mb-3">Important Notary Public Disclosure</h3>
+        <p class="text-dark">
+            **Ralph H. Schofield, Jr.** is a Florida Notary Public, Commission # HH 645857.
+        </p>
+        <p class="text-dark mb-0">
+            A notary public's duty is to ensure the identity of signers and witness the signing of documents. A notary public is prohibited by law from preparing legal documents or giving legal advice.
+        </p>
+    </section>
+
+    <hr class="my-5">
+
+    <section id="contact-us" class="text-center">
+        <h2 class="mb-4 text-secondary">Connect with Us</h2>
+        <p class="lead">For inquiries about our ministry or notary services, please reach out.</p>
+        <a href="#" class="btn btn-success btn-lg shadow-sm"><i class="fas fa-envelope me-2"></i> Contact Us</a>
+        <small class="d-block text-muted mt-2">We are here to serve you.</small>
+    </section>
+
+</div>
+{% endblock %}

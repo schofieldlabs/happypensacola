@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Happy Pensacola{% endblock %}</title>
+  {# Correct: Only ONE Bootstrap CSS link #}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  {# Correct: Your custom CSS should come AFTER Bootstrap to allow overrides #}
+<link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Combine body styles into one block for clarity */
+    body {
+      background: #f4f8fb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 150px; /* Adjust based on your navbar height */
+    }
+    .btn {
+      margin: 0.5rem;
+      width: 100%;
+    }
+    @media (min-width: 576px) {
+      .btn {
+        width: auto;
+      }
+    }
+    .container {
+      max-width: 960px;
+    }
+  </style>
+</head>
+<body> {# <--- The <body> tag opens here, directly after </head> #}
+
+  {# Your site-wide navigation should be a direct child of <body> #}
+  <nav class="navbar navbar-expand-lg navbar-dark border-bottom shadow-lg fixed-top" style="background-color: lightsteelblue; background: linear-gradient(to bottom, #003366, #006699);">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="{{ url_for('main.landing') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="d-inline-block align-top" alt="Happy Pensacola" height="100"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdowns" aria-controls="navbarDropdowns" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarDropdowns">
+        <div class="d-flex justify-content-between w-100 flex-wrap align-items-start">
+          <div class="d-flex flex-column align-items-center">
+            <ul class="navbar-nav d-flex justify-content-center mb-2">
+              <li class="nav-item dropdown" id="nav-wellness">
+                <a class="nav-link dropdown-toggle" href="#" id="wellnessDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Fitness & Wellness
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="wellnessDropdown">
+                  <li><a class="dropdown-item" href="#">Book a Session</a></li>
+                  <li><a class="dropdown-item" href="#">About the Services & Studio</a></li>
+                  <li><a class="dropdown-item" href="#">Become a Client</a></li>
+                  <li><a class="dropdown-item" href="#">About the Instructor</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown" id="nav-school">
+                <a class="nav-link dropdown-toggle" href="#" id="schoolDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Courses & Continuing Education
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="schoolDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Course Catalog</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Enroll</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">My Courses</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Request a Course</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown" id="nav-legal">
+                <a class="nav-link dropdown-toggle" href="#" id="legalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Mediation & Business Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="legalDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Book a Service</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Mediation Services</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Wedding Officiant & Notary Services</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Strategic Planning Services</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav d-flex justify-content-center ms-3">
+              <li class="nav-item dropdown" id="nav-ministry">
+                <a class="nav-link dropdown-toggle" href="#" id="ministryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Weddings, Ministry & Public Speaking
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="ministryDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Wedding Officiant & Notary</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Public Speaking & Sermons</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Online Ministry</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown" id="nav-real-estate">
+                <a class="nav-link dropdown-toggle" href="#" id="realEstateDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Real Estate
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="realEstateDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Request a Sales Agent</a></li>            
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Courses and Continuing Education</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  About & Contact
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="realEstateDropdown">
+                  <li><a class="dropdown-item" href="wellness/aboutowners.html">About Jessica & Ralph</a></li>            
+                  <li><a class="dropdown-item" href="{{ url_for('main.landing') }}">Contact Us</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <ul class="navbar-nav mt-1">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main> {# <--- The <main> tag opens here, after the nav, and wraps the content block #}
+    {% block content %}{% endblock %}
+  </main> {# <--- And closes here #}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{{ url_for('static', filename='js/custom_interactions.js') }}"></script> 
+
+</body> {# <--- The </body> tag closes here, after all content and scripts #}
+</html>
