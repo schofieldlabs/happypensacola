@@ -27,7 +27,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your-secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///happy_pensacola.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///happy_pensacola.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # Register Blueprints
     app.register_blueprint(main_bp)
