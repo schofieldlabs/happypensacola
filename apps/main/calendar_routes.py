@@ -11,6 +11,32 @@ from dateutil import parser
 import pytz
 LOCAL_TZ = pytz.timezone('America/Chicago')
 
+# Ralph availability
+RALPH_AVAILABILITY = {
+    0: [(12, 13), (17, 21)],
+    1: [(12, 13), (17, 21)],
+    2: [(12, 13), (17, 21)],
+    3: [(12, 13), (17, 21)],
+    4: [(12, 13), (17, 21)],
+    5: [(8, 20)],
+    6: [(8, 20)],
+}
+
+# Jessica availability (we’ll fill this in once you give me hers)
+JESSICA_AVAILABILITY = {
+    # Example
+    0: [(10, 14), (16, 19)],
+    1: [(9, 13)],
+    # etc...
+}
+
+
+# Mapping owner to availability
+OWNER_AVAILABILITIES = {
+    'ralph': RALPH_AVAILABILITY,
+    'jessica': JESSICA_AVAILABILITY,
+}
+
 calendar_routes = Blueprint('calendar_routes', __name__)
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -153,10 +179,11 @@ def get_available_slots(service_type):
     owner = config['owner']
     duration = config['duration']
     days_ahead = config['days_ahead']
-    hours = config['hours']
+    hour = config['hours']
 
     creds = load_credentials(owner)
     service = build('calendar', 'v3', credentials=creds)
+    weekly_available_days = OWNER_AVAILABILITIES.get(owner, {})
 
     now = datetime.now(LOCAL_TZ)
     end_date = now + timedelta(days=days_ahead)
@@ -173,14 +200,18 @@ def get_available_slots(service_type):
     slots = []
     for day_offset in range(days_ahead):
         date = now.date() + timedelta(days=day_offset)
-        for hour in hours:
-            slot_time = LOCAL_TZ.localize(datetime.combine(date, dt_time(hour, 0)))
-            conflict = any(
-                (slot_time >= parse_event(e['start']) and slot_time < parse_event(e['end']))
-                for e in events
-            )
-            if not conflict and slot_time > now:
-                slots.append(slot_time)
+        weekday = date.weekday()
+        if weekday not in weekly_available_days:
+            continue
+        for start_hour, end_hour in weekly_available_days[weekday]:
+            for hour in range (start_hour, end_hour):
+                slot_time = LOCAL_TZ.localize(datetime.combine(date, dt_time(hour, 0)))
+                conflict = any(
+                    (slot_time >= parse_event(e['start']) and slot_time < parse_event(e['end']))
+                    for e in events
+                )
+                if not conflict and slot_time > now:
+                    slots.append(slot_time)
     return slots
 
 def parse_event(event_time):
