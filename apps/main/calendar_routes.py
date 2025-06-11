@@ -31,6 +31,8 @@ def authorize(owner):
         include_granted_scopes='true',
         prompt='consent'
     )
+    session[f'{owner}_state'] = state
+    return redirect(authorization_url)
 
 @calendar_routes.route('/oauth2callback/<owner>', endpoint='oauth2callback')
 def oauth2callback(owner):
