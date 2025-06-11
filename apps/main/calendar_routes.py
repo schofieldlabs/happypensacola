@@ -4,16 +4,20 @@ from flask import Blueprint, render_template, session, redirect, url_for, reques
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
-from .models import db, CalendarCredential
+from .models import db, CalendarCredential, Booking
+import stripe
+from .services import SERVICE_CATALOG
 
 calendar_routes = Blueprint('calendar_routes', __name__)
 
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-CLIENT_SECRETS_FILE = 'credentials.json'
-JESSICA_CLIENT_SECRETS_FILE = 'jessica_credentials.json'
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+CLIENT_SECRETS_FILE = '/etc/secrets/credentials.json'
+JESSICA_CLIENT_SECRETS_FILE = '/etc/secrets/jessica_credentials.json'
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-# === Admin OAuth Routes ===
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+
+# === Admin OAuth Authorization ===
 
 @calendar_routes.route('/authorize/<owner>', endpoint='authorize')
 def authorize(owner):
@@ -28,7 +32,6 @@ def authorize(owner):
 
 @calendar_routes.route('/oauth2callback/<owner>', endpoint='oauth2callback')
 def oauth2callback(owner):
-    print(f"Received OAuth callback for {owner}")
     secrets = get_secrets_file(owner)
     state = session.get(f'{owner}_state')
     flow = Flow.from_client_secrets_file(
@@ -39,29 +42,136 @@ def oauth2callback(owner):
     creds = flow.credentials
 
     store_credentials(owner, creds)
-    return redirect(url_for(f'calendar_routes.book_{owner}'))
+    return f"{owner.title()}'s calendar successfully authorized!"
 
-# === Public Booking Pages ===
+# === Client Dynamic Booking Routes ===
 
-@calendar_routes.route('/book-mediation', endpoint='book_ralph')
-def book_mediation():
-    creds = load_credentials('ralph')
-    if not creds:
-        return redirect(url_for('calendar_routes.authorize', owner='ralph'))
+@calendar_routes.route('/book/<service_type>', endpoint='book_service')
+def book_service(service_type):
+    if service_type not in SERVICE_CATALOG:
+        return "Invalid service", 404
 
-    events = get_upcoming_events(creds)
-    return render_template('booking/mediation.html', events=events)
+    slots = get_available_slots(service_type)
+    return render_template('booking/book.html', service_type=service_type, service_name=SERVICE_CATALOG[service_type]['name'], slots=slots)
 
-@calendar_routes.route('/book-wellness', endpoint='book_jessica')
-def book_wellness():
-    creds = load_credentials('jessica')
-    if not creds:
-        return redirect(url_for('calendar_routes.authorize', owner='jessica'))
+@calendar_routes.route('/confirm-booking', methods=['POST'])
+def confirm_booking():
+    service_type = request.form['service_type']
+    config = SERVICE_CATALOG[service_type]
+    owner = config['owner']
+    price = config['price']
 
-    events = get_upcoming_events(creds)
-    return render_template('booking/wellness.html', events=events)
+    slot = request.form['slot']
+    name = request.form['name']
+    email = request.form['email']
+    phone = request.form['phone']
 
-# === Utility Functions ===
+    session['booking_data'] = {
+        'service_type': service_type,
+        'owner': owner,
+        'slot': slot,
+        'name': name,
+        'email': email,
+        'phone': phone
+    }
+
+    session_obj = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {'name': config['name']},
+                'unit_amount': price,
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=url_for('calendar_routes.booking_success', _external=True),
+        cancel_url=url_for('calendar_routes.book_service', service_type=service_type, _external=True),
+    )
+
+    return redirect(session_obj.url)
+
+@calendar_routes.route('/booking-success')
+def booking_success():
+    data = session.get('booking_data')
+    if not data:
+        return "Session expired."
+
+    config = SERVICE_CATALOG[data['service_type']]
+    creds = load_credentials(config['owner'])
+    service = build('calendar', 'v3', credentials=creds)
+
+    start_dt = datetime.datetime.fromisoformat(data['slot'])
+    end_dt = start_dt + datetime.timedelta(minutes=config['duration'])
+
+    event = {
+        'summary': config['name'],
+        'description': f"Client: {data['name']}, Email: {data['email']}, Phone: {data['phone']}",
+        'start': {'dateTime': start_dt.isoformat(), 'timeZone': 'America/Chicago'},
+        'end': {'dateTime': end_dt.isoformat(), 'timeZone': 'America/Chicago'},
+    }
+
+    created_event = service.events().insert(calendarId='primary', body=event).execute()
+
+    new_booking = Booking(
+        service_type=data['service_type'],
+        name=data['name'],
+        email=data['email'],
+        phone=data['phone'],
+        appointment_time=start_dt,
+        google_event_id=created_event['id'],
+        stripe_payment_id='TBD'
+    )
+    db.session.add(new_booking)
+    db.session.commit()
+
+    return "Booking complete!"
+
+# === Availability Logic ===
+
+def get_available_slots(service_type):
+    config = SERVICE_CATALOG[service_type]
+    owner = config['owner']
+    duration = config['duration']
+    days_ahead = config['days_ahead']
+    hours = config['hours']
+
+    creds = load_credentials(owner)
+    service = build('calendar', 'v3', credentials=creds)
+
+    now = datetime.datetime.utcnow()
+    end_date = now + datetime.timedelta(days=days_ahead)
+
+    events_result = service.events().list(
+        calendarId='primary',
+        timeMin=now.isoformat() + 'Z',
+        timeMax=end_date.isoformat() + 'Z',
+        singleEvents=True,
+        orderBy='startTime'
+    ).execute()
+    events = events_result.get('items', [])
+
+    slots = []
+    for day_offset in range(days_ahead):
+        date = now.date() + datetime.timedelta(days=day_offset)
+        for hour in hours:
+            slot_time = datetime.datetime.combine(date, datetime.time(hour, 0))
+            conflict = any(
+                (slot_time >= parse_event(e['start']) and slot_time < parse_event(e['end']))
+                for e in events
+            )
+            if not conflict and slot_time > now:
+                slots.append(slot_time)
+    return slots
+
+def parse_event(event_time):
+    if 'dateTime' in event_time:
+        return datetime.datetime.fromisoformat(event_time['dateTime'].replace('Z', '+00:00'))
+    else:
+        return datetime.datetime.fromisoformat(event_time['date'])
+
+# === Credentials Storage ===
 
 def get_secrets_file(owner):
     return CLIENT_SECRETS_FILE if owner == 'ralph' else JESSICA_CLIENT_SECRETS_FILE
@@ -92,15 +202,3 @@ def load_credentials(owner):
         scopes=record.scopes.split(",")
     )
     return creds
-
-def get_upcoming_events(creds, max_results=5):
-    service = build('calendar', 'v3', credentials=creds)
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
-    events_result = service.events().list(
-        calendarId='primary',
-        timeMin=now,
-        maxResults=max_results,
-        singleEvents=True,
-        orderBy='startTime'
-    ).execute()
-    return events_result.get('items', [])
