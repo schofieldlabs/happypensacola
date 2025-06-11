@@ -17,7 +17,7 @@ from flask_migrate import Migrate
 import os
 from apps.main.models import db
 from apps.main.calendar_routes import calendar_routes
-
+from dotenv import load_dotenv
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 

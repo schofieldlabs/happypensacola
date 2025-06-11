@@ -26,9 +26,11 @@ def authorize(owner):
         secrets, scopes=SCOPES,
         redirect_uri=url_for('calendar_routes.oauth2callback', owner=owner, _external=True)
     )
-    authorization_url, state = flow.authorization_url(access_type='offline', include_granted_scopes='true')
-    session[f'{owner}_state'] = state
-    return redirect(authorization_url)
+    authorization_url, state = flow.authorization_url(
+        access_type='offline',
+        include_granted_scopes='true',
+        prompt='consent'
+    )
 
 @calendar_routes.route('/oauth2callback/<owner>', endpoint='oauth2callback')
 def oauth2callback(owner):
@@ -177,6 +179,10 @@ def get_secrets_file(owner):
     return CLIENT_SECRETS_FILE if owner == 'ralph' else JESSICA_CLIENT_SECRETS_FILE
 
 def store_credentials(owner, creds):
+    required_fields = [creds.refresh_token, creds.token_uri, creds.client_id, creds.client_secret]
+    if not all(required_fields):
+        raise ValueError("OAuth credentials incomplete. Please reauthorize with full consent.")
+
     existing = CalendarCredential.query.filter_by(owner=owner).first()
     if not existing:
         existing = CalendarCredential(owner=owner)
