@@ -8,6 +8,8 @@ import stripe
 from .services import SERVICE_CATALOG
 from datetime import datetime, timedelta, timezone, time as dt_time
 from dateutil import parser
+import pytz
+LOCAL_TZ = pytz.timezone('America/Chicago')
 
 calendar_routes = Blueprint('calendar_routes', __name__)
 
@@ -156,13 +158,13 @@ def get_available_slots(service_type):
     creds = load_credentials(owner)
     service = build('calendar', 'v3', credentials=creds)
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(LOCAL_TZ)
     end_date = now + timedelta(days=days_ahead)
 
     events_result = service.events().list(
         calendarId='primary',
-        timeMin=now.isoformat(),
-        timeMax=end_date.isoformat(),
+        timeMin=now.astimezone(timezone.utc).isoformat(),
+        timeMax=end_date.astimezone(timezone.utc).isoformat(),
         singleEvents=True,
         orderBy='startTime'
     ).execute()
@@ -172,7 +174,7 @@ def get_available_slots(service_type):
     for day_offset in range(days_ahead):
         date = now.date() + timedelta(days=day_offset)
         for hour in hours:
-            slot_time = datetime.combine(date, dt_time(hour, 0, tzinfo=timezone.utc))
+            slot_time = LOCAL_TZ.localize(datetime.combine(date, dt_time(hour, 0)))
             conflict = any(
                 (slot_time >= parse_event(e['start']) and slot_time < parse_event(e['end']))
                 for e in events
@@ -186,7 +188,7 @@ def parse_event(event_time):
         dt = parser.isoparse(event_time['dateTime'])
     else:
         dt = parser.isoparse(event_time['date'])
-    return dt.astimezone(timezone.utc)
+    return dt.astimezone(LOCAL_TZ)
 
 # === Credentials Storage ===
 
