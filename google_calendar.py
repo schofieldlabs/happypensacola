@@ -6,8 +6,15 @@ from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-CLIENT_SECRETS_FILE = 'credentials.json'
-JESSICA_CLIENT_SECRETS_FILE = 'jessica_credentials.json'
+CLIENT_SECRETS_FILE = '/etc/secrets/credentials.json'
+JESSICA_CLIENT_SECRETS_FILE = '/etc/secrets/jessica_credentials.json'
+
+# Optional: fallback for local development
+if not os.path.exists(CLIENT_SECRETS_FILE):
+    CLIENT_SECRETS_FILE = 'credentials.json'
+
+if not os.path.exists(JESSICA_CLIENT_SECRETS_FILE):
+    JESSICA_CLIENT_SECRETS_FILE = 'jessica_credentials.json'
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'dev-secret')  # Dev fallback
