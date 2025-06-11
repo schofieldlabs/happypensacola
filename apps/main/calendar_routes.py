@@ -43,6 +43,17 @@ def oauth2callback(owner):
     flow.fetch_token(authorization_response=request.url)
     creds = flow.credentials
 
+    # 🚀 SUPER DEBUGGER START 🚀
+    print("====== GOOGLE CREDENTIALS RECEIVED ======")
+    print(f"Token: {creds.token}")
+    print(f"Refresh Token: {creds.refresh_token}")
+    print(f"Token URI: {creds.token_uri}")
+    print(f"Client ID: {creds.client_id}")
+    print(f"Client Secret: {creds.client_secret}")
+    print(f"Scopes: {creds.scopes}")
+    print("==========================================")
+    # 🚀 SUPER DEBUGGER END 🚀
+
     store_credentials(owner, creds)
     return f"{owner.title()}'s calendar successfully authorized!"
 
