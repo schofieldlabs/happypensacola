@@ -28,6 +28,7 @@ def authorize(owner):
 
 @calendar_routes.route('/oauth2callback/<owner>', endpoint='oauth2callback')
 def oauth2callback(owner):
+    print(f"Received OAuth callback for {owner}")
     secrets = get_secrets_file(owner)
     state = session.get(f'{owner}_state')
     flow = Flow.from_client_secrets_file(
