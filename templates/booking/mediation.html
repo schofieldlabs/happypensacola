@@ -1,5 +1,10 @@
-<!-- book_mediation.html -->
-<h1>Mediation Booking</h1>
-{% for event in events %}
-    <p>{{ event.start.dateTime or event.start.date }} - {{ event.summary }}</p>
-{% endfor %}
+<h1>Book Mediation</h1>
+
+<h3>Unavailable Times (Next 7 Days)</h3>
+<ul>
+  {% for slot in busy %}
+    <li>{{ slot.start }} - {{ slot.end }}</li>
+  {% endfor %}
+</ul>
+
+<!-- Later: Add actual booking form that avoids these slots -->
