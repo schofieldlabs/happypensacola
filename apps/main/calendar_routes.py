@@ -11,27 +11,35 @@ from dateutil import parser
 import pytz
 LOCAL_TZ = pytz.timezone('America/Chicago')
 
-# Ralph availability
+
+# Below is Jessica and Ralph's general availability, which is used to determine available slots for booking.
+# This availability is further limited by the specific service type and the owner's calendar events.
+
+# Days 0 through 4 represent Monday through Friday, and 5 and 6 represent Saturday and Sunday.
+# Each tuple represents a time range in 24-hour format (start_hour, end_hour).
+
+# Ralph is available from 12 PM to 1 PM and 5 PM to 9 PM on weekdays, and all day on weekends.
+# Jessica is available all day from 7 AM to 8 PM on all days except Sunday, when she is not available.
+
 RALPH_AVAILABILITY = {
     0: [(12, 13), (17, 21)],
     1: [(12, 13), (17, 21)],
     2: [(12, 13), (17, 21)],
     3: [(12, 13), (17, 21)],
     4: [(12, 13), (17, 21)],
-    5: [(8, 20)],
-    6: [(8, 20)],
+    5: [(7, 20)],
+    6: [(7, 20)],
 }
 
-# Jessica availability (we’ll fill this in once you give me hers)
 JESSICA_AVAILABILITY = {
-    # Example
-    0: [(10, 14), (16, 19)],
-    1: [(9, 13)],
-    # etc...
+    0: [(7, 20)],
+    1: [(7, 20)],
+    2: [(7, 20)],
+    3: [(7, 20)],
+    4: [(7, 20)],
+    5: [(7, 20)],
 }
 
-
-# Mapping owner to availability
 OWNER_AVAILABILITIES = {
     'ralph': RALPH_AVAILABILITY,
     'jessica': JESSICA_AVAILABILITY,
