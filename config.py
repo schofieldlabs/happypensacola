@@ -1,4 +1,3 @@
-# config.py
 import os
 import stripe
 
@@ -7,4 +6,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-stripe.api_key = os.environ['STRIPE_SECRET_KEY']
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
