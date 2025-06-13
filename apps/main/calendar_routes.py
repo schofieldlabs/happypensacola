@@ -3,7 +3,8 @@ from flask import Blueprint, render_template, session, redirect, url_for, reques
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
-from .models import db, CalendarCredential, Booking
+from .models import CalendarCredential, Booking
+from core.extensions import db
 import stripe
 from .services import SERVICE_CATALOG
 from datetime import datetime, timedelta, timezone, time as dt_time
@@ -48,8 +49,13 @@ OWNER_AVAILABILITIES = {
 calendar_routes = Blueprint('calendar_routes', __name__)
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-CLIENT_SECRETS_FILE = '/etc/secrets/credentials.json'
-JESSICA_CLIENT_SECRETS_FILE = '/etc/secrets/jessica_credentials.json'
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))  # This gives you apps/main/
+SECRETS_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', '..', 'etc', 'secrets'))
+
+CLIENT_SECRETS_FILE = os.path.join(SECRETS_DIR, 'credentials.json')
+JESSICA_CLIENT_SECRETS_FILE = os.path.join(SECRETS_DIR, 'jessica_credentials.json')
+
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')

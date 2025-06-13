@@ -13,7 +13,9 @@ from apps.legal.routes import legal_bp
 from apps.ministry.routes import ministry_bp
 from apps.realestate.routes import realestate_bp
 from apps.wellness.routes import wellness_bp
-from apps.rag.routes import rag_bp, admin_bp
+from apps.rag.admin_routes import admin_bp
+from apps.rag.routes import rag_bp
+
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
