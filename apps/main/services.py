@@ -10,7 +10,7 @@ SERVICE_CATALOG = {
         'owner': 'ralph',
         'price': 50000,  # $500
         'duration': 120,  # minutes
-        'hours': range(12, 21),  # 12 PM to 8 PM start times
+        'hours': range(12, 21),  # This allows limiting availability by service type.
         'days_ahead': 30,
         'buffer_before': 15,  # 15 min buffer for prep
     },
