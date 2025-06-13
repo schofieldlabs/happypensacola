@@ -4,6 +4,7 @@ from flask import Flask
 from flask_login import LoginManager
 from config import Config
 from apps.main.routes import main_bp
+from apps.health.routes import health_bp
 from apps.courses.routes import courses_bp
 from apps.main.routes import auth_bp
 from apps.legal.routes import legal_bp
@@ -30,6 +31,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///happy_pensacola.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # Register Blueprints
+    app.register_blueprint(health_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(courses_bp)
     app.register_blueprint(auth_bp)
