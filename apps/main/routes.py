@@ -11,6 +11,8 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/main")
 @main_bp.route("/")
 def landing():
     return render_template("landing.html")
+def health_check():
+    return 'OK', 200
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

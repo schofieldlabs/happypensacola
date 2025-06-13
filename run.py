@@ -19,9 +19,8 @@ import os
 from apps.main.models import db
 from apps.main.calendar_routes import calendar_routes
 from dotenv import load_dotenv
-from apps.rag.routes import rag_bp
+from apps.rag.routes import rag_bp, admin_bp
 from flask_cors import CORS
-
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -34,6 +33,9 @@ def create_app():
     app.config['SECRET_KEY'] = 'your-secret-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///happy_pensacola.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+
     # Register Blueprints
     app.register_blueprint(health_bp)
     app.register_blueprint(main_bp)
@@ -44,6 +46,7 @@ def create_app():
     app.register_blueprint(ministry_bp)
     app.register_blueprint(realestate_bp)
     app.register_blueprint(wellness_bp)
+    app.register_blueprint(admin_bp)
     app.register_blueprint(rag_bp, url_prefix='/rag')
 
     @app.route('/rag')
@@ -66,6 +69,15 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+
+    try:
+        db.init_app(app)
+        Migrate(app, db)
+        bcrypt.init_app(app)
+        login_manager.init_app(app)
+    except Exception as e:
+        print(f"Error initializing extensions: {e}")
 
     return app
 
