@@ -2,11 +2,33 @@ services:
   - type: web
     name: happypensacola
     env: python
-    plan: free
+    plan: free  # you can change to 'starter' or 'standard' when scaling
+    region: oregon  # pick your closest Render region
     branch: main
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn 'run:create_app()'"
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn 'run:create_app()'
     envVars:
       - key: FLASK_ENV
         value: production
-    healthCheckPath: /health
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: PORT
+        value: "10000"
+      - key: PYTHON_VERSION
+        value: 3.10.13
+      - key: DATABASE_URL
+        sync: false  # set your Postgres or SQLite URL here manually via Render
+      - key: MONGODB_URI
+        sync: false  # set your Mongo Atlas connection here manually via Render
+      - key: OLLAMA_BASE_URL
+        sync: false  # optional if you're using remote Ollama cloud
+
+buildFilters:
+  paths:
+    - apps/**
+    - core/**
+    - config.py
+    - run.py
+    - requirements.txt
+    - render.yaml
+    - .env
