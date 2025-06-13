@@ -19,7 +19,7 @@ import os
 from apps.main.models import db
 from apps.main.calendar_routes import calendar_routes
 from dotenv import load_dotenv
-from apps.rag.routes import rag_bp, admin_bp
+from apps.rag.routes import rag_bp
 from flask_cors import CORS
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
