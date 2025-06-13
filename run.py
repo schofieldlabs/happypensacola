@@ -1,6 +1,6 @@
 
 from core.extensions import db, login_manager, bcrypt
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_login import LoginManager
 from config import Config
 from apps.main.routes import main_bp
@@ -19,6 +19,9 @@ import os
 from apps.main.models import db
 from apps.main.calendar_routes import calendar_routes
 from dotenv import load_dotenv
+from apps.rag.routes import rag_bp
+from flask_cors import CORS
+
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -26,6 +29,7 @@ login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = 'your-secret-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///happy_pensacola.db'
@@ -40,6 +44,12 @@ def create_app():
     app.register_blueprint(ministry_bp)
     app.register_blueprint(realestate_bp)
     app.register_blueprint(wellness_bp)
+    app.register_blueprint(rag_bp, url_prefix='/rag')
+
+    @app.route('/rag')
+    def serve_index():
+        return send_from_directory('frontend', 'rag_chat.html')
+
 
     # Initialize extensions
     db.init_app(app)
