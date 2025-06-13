@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 *.pyc
 *.so
+*$py.class
 
 # Virtual Environments
 venv/
@@ -19,6 +20,7 @@ migrations/versions/
 # Environment files & secrets
 .env
 *.env
+.env.*
 *credentials.json
 
 # IDEs
@@ -52,3 +54,19 @@ Thumbs.db
 *.swp
 *.swo
 *.bak
+
+faiss_index/
+*.idx
+metadata/
+*.jsonl
+*.pkl
+
+docs/
+*.pdf
+
+ollama/
+
+.idea/
+.vscode/
+*.log
+build/
