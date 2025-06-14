@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from apps.courses.models import User
 import os
@@ -13,6 +13,10 @@ def landing():
     return render_template("landing.html")
 def health_check():
     return 'OK', 200
+
+@main_bp.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

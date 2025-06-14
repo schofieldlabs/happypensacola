@@ -19,7 +19,7 @@ from apps.rag.routes import rag_bp
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='../templates', static_folder='../static')
     CORS(app)
     app.config.from_object(Config)
 
@@ -44,7 +44,7 @@ def create_app():
 
     @app.route('/rag')
     def serve_index():
-        return send_from_directory('frontend', 'rag_chat.html')
+        return send_from_directory('../frontend', 'rag_chat.html')
 
     @app.context_processor
     def inject_user():
