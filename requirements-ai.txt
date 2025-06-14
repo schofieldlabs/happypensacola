@@ -1,3 +1,6 @@
+-r requirements.txt  # include base first
+
+
 sentence-transformers==4.1.0
 langchain==0.3.25
 langchain-community==0.3.25
